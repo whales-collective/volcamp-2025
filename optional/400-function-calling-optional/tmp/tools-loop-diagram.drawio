@@ -1,0 +1,113 @@
+<mxfile host="65bd71144e">
+    <diagram name="Tool Loop Flow" id="tool-loop-flow">
+        <mxGraphModel dx="795" dy="571" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="start" value="START&#xa;Steps 1-10: Setup" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="40" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="init" value="Initialize:&#xa;• Context &amp; Client&#xa;• Define Tools&#xa;• User Message&#xa;• Loop Variables" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="20" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="loopStart" value="Step 11: Main Loop&#xa;while (!stopped)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="30" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="sendRequest" value="Steps 12-14:&#xa;Send Request to AI&#xa;Get Response &amp;&#xa;Finish Reason" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="160" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="decision" value="Step 15: Handle Response&#xa;Based on Finish Reason" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="290" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="toolCalls" value="finish_reason =&#xa;&quot;tool_calls&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffd966;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="420" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="stopPath" value="finish_reason =&#xa;&quot;stop&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#d32f2f;" parent="1" vertex="1">
+                    <mxGeometry x="750" y="420" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="toolProcess" value="Steps 16-19:&#xa;Extract Tool Calls&#xa;Convert to Message Format&#xa;Add to Conversation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4edda;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="520" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="execTools" value="Steps 20-23:&#xa;Execute Each Tool&#xa;Handle Errors&#xa;Store Results" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3d9ff;strokeColor=#0066cc;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="520" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="addResults" value="Step 24:&#xa;Add Tool Results&#xa;to Conversation&#xa;History" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffccdd;strokeColor=#cc0066;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="520" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="finalMsg" value="Steps 26-27:&#xa;Extract Final Message&#xa;Add to History&#xa;Display Result" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6ffe6;strokeColor=#4d9900;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="520" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="end" value="END&#xa;Loop Complete" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#d32f2f;" parent="1" vertex="1">
+                    <mxGeometry x="750" y="650" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="loopBack" value="Continue Loop&#xa;AI may need more tools" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="650" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="convHistory" value="Conversation History&#xa;(Maintained Throughout)&#xa;&#xa;1. User Question&#xa;2. Assistant Tool Calls&#xa;3. Tool Results&#xa;4. Assistant Tool Calls&#xa;5. Tool Results&#xa;6. Final Assistant Message" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#666666;dashed=1;dashPattern=5 5;align=left;spacingLeft=5;arcSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="920" y="200" width="200" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="keyExpl" value="KEY INSIGHTS:&#xa;&#xa;Step 17: Convert tool calls to proper&#xa;message format for history&#xa;&#xa;Step 18: Create assistant message&#xa;with tool calls before execution&#xa;&#xa;Step 24: Add tool results back to&#xa;conversation so AI knows what&#xa;happened and can generate final report" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffcc;strokeColor=#ffcc00;align=left;spacingLeft=5;arcSize=8;" parent="1" vertex="1">
+                    <mxGeometry x="920" y="450" width="200" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="start" target="init" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="init" target="loopStart" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="loopStart" target="sendRequest" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="sendRequest" target="decision" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="decision" target="toolCalls" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="decision" target="stopPath" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="toolCalls" target="toolProcess" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="toolProcess" target="execTools" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="execTools" target="addResults" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="addResults" target="loopBack" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" parent="1" source="loopBack" target="loopStart" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="550" y="680"/>
+                            <mxPoint x="40" y="680"/>
+                            <mxPoint x="40" y="70"/>
+                            <mxPoint x="450" y="70"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="stopPath" target="finalMsg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="finalMsg" target="end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="label1" value="tool_calls" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="350" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="label2" value="stop" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="650" y="350" width="40" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="label3" value="Loop continues until&#xa;AI returns &#39;stop&#39;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="600" width="110" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Tool Calls Loop" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=15;labelBackgroundColor=#33FFFF;" vertex="1" parent="1">
+                    <mxGeometry x="620" y="20" width="300" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

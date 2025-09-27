@@ -1,0 +1,13 @@
+# docker compose up --build --no-log-prefix
+services:
+  use-tools:
+    build: .
+    models:
+      tools-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: MODEL_RUNNER_LLM_TOOLS
+
+models:
+  tools-model:
+    model: hf.co/menlo/jan-nano-gguf:q4_k_m
+    

@@ -1,0 +1,91 @@
+<mxfile host="65bd71144e">
+    <diagram name="RAG Process" id="rag-process">
+        <mxGraphModel dx="890" dy="555" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="RAG (Retrieval-Augmented Generation) Process" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="400" y="20" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="chunks" value="Document Chunks&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;# Orcs&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;# Dragons&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;# Goblins&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;# Krakens&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="80" y="100" width="150" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="embed-gen" value="&lt;b&gt;&lt;u&gt;Embedding Generation&lt;br&gt;&lt;/u&gt;&lt;/b&gt;&lt;br&gt;Model:&amp;nbsp;&lt;div&gt;&lt;b style=&quot;background-color: rgb(51, 255, 255);&quot;&gt;mxbai-embed-large&lt;/b&gt;&lt;br&gt;Convert text to vectors&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="300" y="100" width="150" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="vector-store" value="Memory Vector Store&lt;br&gt;&lt;br&gt;Store embeddings&lt;br&gt;with original text" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="520" y="100" width="150" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="user-question" value="User Question&lt;br&gt;&lt;br&gt;&quot;Tell me something&lt;br&gt;about the dragons&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="80" y="300" width="150" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="question-embed" value="Question Embedding&lt;br&gt;&lt;br&gt;Convert user question&lt;br&gt;to vector" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="300" y="300" width="150" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="similarity" value="Similarity Search&lt;br&gt;&lt;br&gt;Find top 2 most similar&lt;br&gt;documents (threshold: 0.6)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="520" y="300" width="150" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="retrieved" value="Retrieved Documents&lt;br&gt;&lt;br&gt;Most relevant chunks&lt;br&gt;based on similarity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="740" y="300" width="150" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="chat" value="&lt;b&gt;&lt;u&gt;Chat Completion&lt;br&gt;&lt;/u&gt;&lt;/b&gt;&lt;br&gt;Model: &lt;b style=&quot;background-color: rgb(51, 255, 255);&quot;&gt;qwen2.5:0.5B-F16&lt;/b&gt;&lt;br&gt;Generate answer using&lt;br&gt;retrieved context" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="300" y="500" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="answer" value="AI Answer&lt;br&gt;&lt;br&gt;Contextual response&lt;br&gt;about dragons" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="600" y="500" width="150" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="chunks" target="embed-gen" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="embed-gen" target="vector-store" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="user-question" target="question-embed" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="question-embed" target="similarity" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="similarity" target="retrieved" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="vector-store" target="similarity" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="question-embed" target="chat" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="retrieved" target="chat" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="chat" target="answer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="label1" value="1. Embed" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10" parent="1" vertex="1">
+                    <mxGeometry x="250" y="130" width="50" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="label2" value="2. Store" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10" parent="1" vertex="1">
+                    <mxGeometry x="470" y="130" width="50" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="label3" value="3. Embed Query" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10" parent="1" vertex="1">
+                    <mxGeometry x="240" y="330" width="70" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="label4" value="4. Search" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10" parent="1" vertex="1">
+                    <mxGeometry x="470" y="330" width="50" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="label5" value="5. Retrieve" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10" parent="1" vertex="1">
+                    <mxGeometry x="690" y="330" width="50" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="label6" value="6. Generate" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10" parent="1" vertex="1">
+                    <mxGeometry x="520" y="530" width="60" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="description" value="RAG Process Flow:&lt;br&gt;1. Convert document chunks to embeddings and store them&lt;br&gt;2. Convert user question to embedding&lt;br&gt;3. Find most similar documents using cosine similarity&lt;br&gt;4. Use retrieved context to generate AI response" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;spacingLeft=10;spacingTop=10" parent="1" vertex="1">
+                    <mxGeometry x="80" y="650" width="500" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="tech-details" value="Technical Details:&lt;br&gt;• Embedding Model: ai/mxbai-embed-large&lt;br&gt;• Chat Model: ai/qwen2.5:0.5B-F16&lt;br&gt;• Similarity Threshold: 0.6&lt;br&gt;• Top Results: 2 documents&lt;br&gt;• Vector Store: In-memory" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;spacingLeft=10;spacingTop=10" parent="1" vertex="1">
+                    <mxGeometry x="620" y="650" width="280" height="110" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

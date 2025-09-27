@@ -1,0 +1,46 @@
+services:
+  # ---------------------------------------------------------
+  # Usage:
+  # docker compose up --build -d
+  # ---------------------------------------------------------
+
+  # ---------------------------------------------------------
+  # Usage:
+  # docker compose attach bibendum_v0
+  # docker exec -it $(docker compose ps -q bibendum_v0) /bin/sh
+  # ---------------------------------------------------------
+  bibendum_v0:
+    build:
+      context: bibendum
+      dockerfile: Dockerfile
+
+    tty: true          # Enable TTY
+    stdin_open: true   # Keep stdin open
+    
+    environment:
+      #TERM: xterm-256color
+
+      AGENT_NAME: Bibendum
+      TEMPERATURE: 0.0
+      TOP_P: 0.3
+
+      SYSTEM_INSTRUCTIONS_PATH: ./data/bibendum_system_instructions.md
+      ALIGOT_KNOWLEDGE_BASE_PATH: ./data/bibendum_kb_aligot.md
+      TRUFFADE_KNOWLEDGE_BASE_PATH: ./data/bibendum_kb_truffade.md
+
+    volumes:
+      - ./bibendum/data:/app/data
+
+    models:
+      cook-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: COOK_MODEL
+
+models:
+  cook-model:
+    model: ai/qwen2.5:1.5B-F16   
+    context_size: 8192
+    #context_size: 16384
+
+# docker compose attach bibendum_v0
+# docker exec -it $(docker compose ps -q bibendum_v0) /bin/sh

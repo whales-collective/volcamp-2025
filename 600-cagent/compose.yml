@@ -1,0 +1,119 @@
+# docker compose up --build --no-log-prefix
+services:
+
+  mcp-gateway:
+    # mcp-gateway secures your MCP servers
+    image: docker/mcp-gateway:v2
+    ports:
+      - 9011:9011
+    use_api_socket: true
+    command:
+      - --port=9011
+      - --transport=streaming
+      - --verbose
+      - --catalog=/mcp/catalog.yaml
+      - --servers=mcp-aligot,mcp-truffade
+    configs:
+      - source: catalog.yaml
+        target:
+          /mcp/catalog.yaml
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      #- ./config:/config
+
+    depends_on:
+      mcp-aligot:
+        condition: service_healthy
+      mcp-truffade:
+        condition: service_healthy
+
+  mcp-aligot:
+    build:
+      context: ../500-assistant-with-tools/mcp-aligot-server
+      dockerfile: Dockerfile    
+    environment:
+      MCP_HTTP_PORT: 6060
+      LIMIT: 0.6
+      MAX_RESULTS: 5
+      ALIGOT_AGENT_KNOWLEDGE_BASE_PATH: ./documents/kb_aligot-enriched.md
+      VECTOR_STORES_PATH: ./data
+    
+    volumes:
+      - ./mcp-aligot-server/documents:/app/documents
+      - ./mcp-aligot-server/data:/app/data
+    models:
+      embedding-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: EMBEDDING_MODEL
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:6060/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mcp-truffade:
+    build:
+      context: ../500-assistant-with-tools/mcp-truffade-server
+      dockerfile: Dockerfile    
+    environment:
+      MCP_HTTP_PORT: 6060
+      LIMIT: 0.6
+      MAX_RESULTS: 5
+      TRUFFADE_AGENT_KNOWLEDGE_BASE_PATH: ./documents/kb_truffade-enriched.md
+      VECTOR_STORES_PATH: ./data
+    
+    volumes:
+      - ./mcp-truffade-server/documents:/app/documents
+      - ./mcp-truffade-server/data:/app/data
+    models:
+      embedding-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: EMBEDDING_MODEL
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:6060/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+
+  # docker compose attach my-agent
+  bibendum-agent:
+    image: docker/cagent:1.5.0
+    volumes:
+      - ./bibendum.yaml:/app/bibendum.yaml
+    command: ["run", "/app/bibendum.yaml"]
+    tty: true
+    stdin_open: true    
+    models:
+      - cook-model
+    depends_on:
+      mcp-gateway:
+        condition: service_started
+        
+models:
+
+  cook-model:
+    model: hf.co/menlo/jan-nano-gguf:q4_k_m
+
+  embedding-model:
+    model: ai/granite-embedding-multilingual:latest
+
+configs:
+  catalog.yaml:
+    content: |
+      registry:
+
+        mcp-aligot:
+          remote:
+            url: "http://mcp-aligot:6060/mcp"
+            transport_type: http
+
+        mcp-truffade:
+          remote:
+            url: "http://mcp-truffade:6060/mcp"
+            transport_type: http

@@ -1,0 +1,61 @@
+services:
+  # ---------------------------------------------------------
+  # Usage:
+  # docker compose up --build -d
+  # ---------------------------------------------------------
+
+  # ---------------------------------------------------------
+  # Usage:
+  # docker compose attach bibendum
+  # ---------------------------------------------------------
+  bibendum:
+    build:
+      context: bibendum
+      dockerfile: Dockerfile
+
+    tty: true          # Enable TTY
+    stdin_open: true   # Keep stdin open
+    
+    environment:
+      #TERM: xterm-256color
+
+      COOK_NAME: Bibendum
+      COOK_MODEL_TEMPERATURE: 0.0
+      COOK_MODEL_TOP_P: 0.8
+
+      SYSTEM_INSTRUCTIONS_PATH: ./data/bibendum_system_instructions.md
+
+      # ---------------------------------------------------------
+      # Similarity search settings
+      # ---------------------------------------------------------
+      SIMILARITY_LIMIT: 0.6
+      SIMILARITY_MAX_RESULTS: 4
+
+      KNOWLEDGE_BASE_PATH: ./data/kb-enriched/bibendum_kb-enriched.md
+
+      VECTOR_STORES_PATH: ./data/kb-enriched
+
+    volumes:
+      - ./bibendum/data:/app/data
+
+    models:
+      cook-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: COOK_MODEL
+
+      embedding-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: EMBEDDING_MODEL
+
+models:
+  cook-model:
+    #model: ai/qwen2.5:1.5B-F16   
+    model: ai/qwen2.5:3B-F16 
+    context_size: 8192
+
+  embedding-model:
+    #model: ai/mxbai-embed-large:latest
+    model: ai/granite-embedding-multilingual:latest
+    #model: hf.co/second-state/jina-embeddings-v3-gguf:q4_k_m
+    #context_size: 1024
+    

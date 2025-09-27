@@ -1,0 +1,121 @@
+<mxfile host="65bd71144e">
+    <diagram name="RAG System Architecture" id="rag-system">
+        <mxGraphModel dx="956" dy="575" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="RAG (Retrieval Augmented Generation) System" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="20" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="vector-record" value="&lt;b&gt;VectorRecord&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;+ Id: string&lt;br/&gt;+ Prompt: string&lt;br/&gt;+ Embedding: []float64&lt;br/&gt;+ CosineSimilarity: float64" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="100" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="memory-store" value="&lt;b&gt;MemoryVectorStore&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;+ Records: map[string]VectorRecord&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Methods:&lt;/b&gt;&lt;br/&gt;• GetAll()&lt;br/&gt;• Save()&lt;br/&gt;• SearchSimilarities()&lt;br/&gt;• SearchTopNSimilarities()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="100" width="250" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="cosine-functions" value="&lt;b&gt;Cosine Similarity Functions&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;• dotProduct(v1, v2 []float64)&lt;br/&gt;• CosineSimilarity(v1, v2 []float64)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="750" y="100" width="250" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="storage-flow" value="&lt;b&gt;1. Data Storage Flow&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="300" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="prompt-input" value="Text Prompt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="340" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="embedding-process" value="Generate&lt;br/&gt;Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="340" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="save-vector" value="Save as&lt;br/&gt;VectorRecord" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="340" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="store-memory" value="Store in&lt;br/&gt;MemoryVectorStore" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="340" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="search-flow" value="&lt;b&gt;2. Similarity Search Flow&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="420" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="query-input" value="Query Prompt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="460" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="query-embedding" value="Generate&lt;br/&gt;Query Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="460" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="cosine-calc" value="Calculate&lt;br/&gt;Cosine Similarity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="460" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="filter-results" value="Filter by&lt;br/&gt;Threshold" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="460" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="sort-results" value="Sort &amp;&amp; Limit&lt;br/&gt;Top N Results" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="460" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="methods-detail" value="&lt;b&gt;3. Key Methods&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="540" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="search-similarities" value="&lt;b&gt;SearchSimilarities&lt;/b&gt;&lt;br/&gt;• Compare query embedding with all stored vectors&lt;br/&gt;• Filter results by minimum similarity threshold&lt;br/&gt;• Return all matching records" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="580" width="280" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="search-topn" value="&lt;b&gt;SearchTopNSimilarities&lt;/b&gt;&lt;br/&gt;• Calls SearchSimilarities first&lt;br/&gt;• Sorts results by cosine similarity (descending)&lt;br/&gt;• Returns only top N most similar records" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="580" width="300" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="cosine-formula" value="&lt;b&gt;Cosine Similarity Formula&lt;/b&gt;&lt;br/&gt;similarity = (A · B) / (||A|| × ||B||)&lt;br/&gt;• A · B = dot product of vectors A and B&lt;br/&gt;• ||A|| = magnitude (norm) of vector A&lt;br/&gt;• Result ranges from -1 to 1 (1 = identical)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="750" y="580" width="300" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="arrow1" style="endArrow=classic;html=1;rounded=0;" parent="1" source="prompt-input" target="embedding-process" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="500" as="sourcePoint"/>
+                        <mxPoint x="450" y="450" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow2" style="endArrow=classic;html=1;rounded=0;" parent="1" source="embedding-process" target="save-vector" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="500" as="sourcePoint"/>
+                        <mxPoint x="450" y="450" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow3" style="endArrow=classic;html=1;rounded=0;" parent="1" source="save-vector" target="store-memory" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="500" as="sourcePoint"/>
+                        <mxPoint x="450" y="450" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow4" style="endArrow=classic;html=1;rounded=0;" parent="1" source="query-input" target="query-embedding" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="600" as="sourcePoint"/>
+                        <mxPoint x="450" y="550" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow5" style="endArrow=classic;html=1;rounded=0;" parent="1" source="query-embedding" target="cosine-calc" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="600" as="sourcePoint"/>
+                        <mxPoint x="450" y="550" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow6" style="endArrow=classic;html=1;rounded=0;" parent="1" source="cosine-calc" target="filter-results" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="600" as="sourcePoint"/>
+                        <mxPoint x="450" y="550" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow7" style="endArrow=classic;html=1;rounded=0;" parent="1" source="filter-results" target="sort-results" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="600" as="sourcePoint"/>
+                        <mxPoint x="450" y="550" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="connection1" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#666666;" parent="1" source="vector-record" target="memory-store" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="500" as="sourcePoint"/>
+                        <mxPoint x="450" y="450" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="connection2" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#666666;" parent="1" source="memory-store" target="cosine-functions" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="500" as="sourcePoint"/>
+                        <mxPoint x="450" y="450" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -1,0 +1,133 @@
+services:
+  # ---------------------------------------------------------
+  # Usage:
+  # docker compose up --build -d
+  # ---------------------------------------------------------
+
+  mcp-gateway:
+    # mcp-gateway secures your MCP servers
+    image: docker/mcp-gateway:latest
+    ports:
+      - 9011:9011
+    use_api_socket: true
+    command:
+      - --port=9011
+      - --transport=streaming
+      - --verbose
+      - --catalog=/mcp/catalog.yaml
+      - --servers=mcp-aligot,mcp-truffade
+    configs:
+      - source: catalog.yaml
+        target:
+          /mcp/catalog.yaml
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      #- ./config:/config
+
+    depends_on:
+      mcp-aligot:
+        condition: service_healthy
+      mcp-truffade:
+        condition: service_healthy
+
+  mcp-aligot:
+    build:
+      context: mcp-aligot-server
+      dockerfile: Dockerfile    
+    environment:
+      MCP_HTTP_PORT: 6060
+      LIMIT: 0.6
+      MAX_RESULTS: 5
+      ALIGOT_AGENT_KNOWLEDGE_BASE_PATH: ./documents/kb_aligot-enriched.md
+      VECTOR_STORES_PATH: ./data
+    
+    volumes:
+      - ./mcp-aligot-server/documents:/app/documents
+      - ./mcp-aligot-server/data:/app/data
+    models:
+      embedding-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: EMBEDDING_MODEL
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:6060/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mcp-truffade:
+    build:
+      context: mcp-truffade-server
+      dockerfile: Dockerfile    
+    environment:
+      MCP_HTTP_PORT: 6060
+      LIMIT: 0.6
+      MAX_RESULTS: 5
+      TRUFFADE_AGENT_KNOWLEDGE_BASE_PATH: ./documents/kb_truffade-enriched.md
+      VECTOR_STORES_PATH: ./data
+    
+    volumes:
+      - ./mcp-truffade-server/documents:/app/documents
+      - ./mcp-truffade-server/data:/app/data
+    models:
+      embedding-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: EMBEDDING_MODEL
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:6060/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  #docker compose attach augmented-bibendum
+  augmented-bibendum:
+    build:
+      context: bibendum-stream
+      dockerfile: Dockerfile
+
+    tty: true          # Enable TTY
+    stdin_open: true   # Keep stdin open
+    
+    environment:
+      MCP_HOST: http://mcp-gateway:9011/mcp
+      TERM: xterm-256color
+
+      COOK_NAME: Bibendum
+      COOK_MODEL_TEMPERATURE: 0.0
+      COOK_MODEL_TOP_P: 0.8
+
+      SYSTEM_INSTRUCTIONS_PATH: ./data/bibendum_system_instructions.md
+
+    volumes:
+      - ./bibendum/data:/app/data
+
+    models:
+      cook-model:
+        endpoint_var: MODEL_RUNNER_BASE_URL
+        model_var: COOK_MODEL
+
+models:
+  cook-model:
+    model: hf.co/menlo/jan-nano-gguf:q4_k_m
+
+  embedding-model:
+    model: ai/granite-embedding-multilingual:latest
+
+configs:
+  catalog.yaml:
+    content: |
+      registry:
+
+        mcp-aligot:
+          remote:
+            url: "http://mcp-aligot:6060/mcp"
+            transport_type: http
+
+        mcp-truffade:
+          remote:
+            url: "http://mcp-truffade:6060/mcp"
+            transport_type: http
