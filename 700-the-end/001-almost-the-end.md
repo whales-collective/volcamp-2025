@@ -12,7 +12,7 @@ paginate: true
 # 🎬 Almost The End
 
 ## 💙 TLMs + RAG + MCP 🚀
-### https://rsrc.tlm.quest/
+### Technology watch on models: https://rsrc.tlm.quest/
 ### Frameworks to follow
 - OpenAI SDK: https://platform.openai.com/docs/libraries (Go, Python, JS, Java, .NET)
 - Genkit: https://genkit.dev/ (Go, Python, JS)
