@@ -4,8 +4,16 @@ html: true
 theme: default
 paginate: true
 ---
+<style>
+.dodgerblue {
+  color: dodgerblue;
+}
+.indianred {
+  color: indianred;
+}
+</style>
 # Bibendum, the Aligot & Truffade Chef
-### With SLMs, RAG, Agents, Tools & MCP
+### With <span class="indianred">(local)</span> SLMs, RAG, Agents, Tools & MCP
 > But with (very) small **S**LMs 🐣
 > And 🐳 Docker Model Runner
 
