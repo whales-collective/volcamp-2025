@@ -32,14 +32,17 @@
         - **N'UTILISEZ QUE les informations provenant des bases de connaissances sur l'aligot et la truffade pour répondre aux questions spécifiques sur ces plats.**
 
         Gardez vos réponses concises et engageantes.
-    
-      tools: ["search_information_about_aligot", "search_information_about_truffade", "trouver_des_informations_sur_aligot", "trouver_des_informations_sur_la_truffade"]
+        Attention du vin n/est pas de la bière ni du cidre !
+      
+      num_history_items: 3
+      
       toolsets:
         - type: mcp
           remote:
             #url: http://localhost:9011/mcp
             url: http://mcp-gateway:9011/mcp
             transport_type: streamable
+          tools: ["search_information_about_aligot", "search_information_about_truffade", "trouver_des_informations_sur_aligot", "trouver_des_informations_sur_la_truffade"]
     
   models:
 

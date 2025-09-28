@@ -83,7 +83,7 @@ services:
 
   # docker compose attach my-agent
   bibendum-agent:
-    image: docker/cagent:1.5.0
+    image: docker/cagent:1.5.3
     volumes:
       - ./bibendum.yaml:/app/bibendum.yaml
     command: ["run", "/app/bibendum.yaml"]
