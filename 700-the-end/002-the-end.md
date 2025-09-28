@@ -9,8 +9,5 @@ paginate: true
   color: dodgerblue;
 }
 </style>
-# 🎬 The End
-
-## 💙 TLMs + RAG + MCP 🚀
-
-## 🙏 Thanks! Questions?
+# 🙏 Thanks! Questions?
+![qr](./qr-code.png)
