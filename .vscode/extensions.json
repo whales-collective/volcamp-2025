@@ -8,6 +8,7 @@
       "anseki.vscode-color",
       "jeronimoekerdt.color-picker-universal",
       "wayou.vscode-todo-highlight",
-      "bierner.markdown-mermaid"
+      "bierner.markdown-mermaid",
+      "marp-team.marp-vscode"
     ]
 }
