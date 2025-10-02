@@ -29,11 +29,13 @@ services:
       # Similarity search settings
       # ---------------------------------------------------------
       SIMILARITY_LIMIT: 0.6
-      SIMILARITY_MAX_RESULTS: 4
+      SIMILARITY_MAX_RESULTS: 3
 
       KNOWLEDGE_BASE_PATH: ./data/kb-enriched/bibendum_kb-enriched.md
-
       VECTOR_STORES_PATH: ./data/kb-enriched
+
+      # KNOWLEDGE_BASE_PATH: ./data/kb/bibendum_kb.md
+      # VECTOR_STORES_PATH: ./data/kb
 
     volumes:
       - ./bibendum/data:/app/data

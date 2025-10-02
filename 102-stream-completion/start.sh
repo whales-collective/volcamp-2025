@@ -16,7 +16,9 @@ EOM
 )
 
 export SYSTEM_INSTRUCTION="$SYSTEM_INSTRUCTION"
-export USER_PROMPT="Qu'est ce que la truffade ?"
-#export USER_PROMPT="Qu'est ce que l'aligot ? ?"
+#export USER_PROMPT="Qu'est ce que la truffade ?"
+export USER_PROMPT="Qu'est ce que l'aligot ? ?"
 
 go run main.go
+
+echo ""

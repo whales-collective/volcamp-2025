@@ -16,7 +16,7 @@
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.fontWeight": "normal",
         "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace",
-        "editor.fontSize": 20,
+        "editor.fontSize": 14,
         "editor.wordWrap": "on",
         "editor.quickSuggestions": {
             "comments": "off",

@@ -31,7 +31,7 @@ func main() {
 	topP, _ := strconv.ParseFloat(os.Getenv("TOP_P"), 64)
 	agentName := os.Getenv("AGENT_NAME")
 
-	// ✋ NOTE: load the system instructions from a file
+	// ✋ NOTE: load the SYSTEM MESSAGE: instructions from a file
 	systemInstructions, err := os.ReadFile(os.Getenv("SYSTEM_INSTRUCTIONS_PATH"))
 	if err != nil {
 		log.Fatal("😡:", err)
@@ -52,12 +52,13 @@ func main() {
 			break
 		}
 
+		// [MEMORY]
 		if strings.HasPrefix(userMessage, "/memory") {
 			DisplayConversationalMemory(messages)
 			continue
 		}
 
-		// NOTE: append the user message to the messages slice
+		// NOTE: append the USER MESSAGE: add the message to the messages slice
 		messages = append(messages, openai.UserMessage(userMessage))
 
 		param := openai.ChatCompletionNewParams{
@@ -88,7 +89,7 @@ func main() {
 			log.Fatalln("😡:", err)
 		}
 
-		// NOTE: Append the assistant's response to the messages slice
+		// NOTE: Append the ASSISTANT MESSAGE: add response to the messages slice
 		messages = append(messages, openai.AssistantMessage(answer))
 
 		fmt.Println("\n\n", strings.Repeat("-", 80))
